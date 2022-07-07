@@ -1,0 +1,12 @@
+Questions to ask
+
+1) How many dinner cooks?
+1a) If you want dinner cook, which days do you want dinner cook?
+
+2) How many fast cooks?
+
+...Make sure you take into account labor positions when assigning labor...
+
+3) How many garden helpers do you want?
+
+5) 
