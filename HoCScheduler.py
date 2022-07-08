@@ -99,7 +99,7 @@ def main():
     
     
     # Allocate all jobs and put into the unfulfilled job array
-    excelsheet = pd.read_excel(r'C:\Users\valde\Desktop\HoCScheduler\House of Commons, Jobs.xlsx')
+    excelsheet = pd.read_excel(r'C:\Users\valde\Desktop\GitHub\HoCScheduler\House of Commons, Jobs.xlsx')
     df = pd.DataFrame(excelsheet, columns = EXCELCOLUMNS)
     
     # Array of unfulfilled jobs, initially full
@@ -165,7 +165,7 @@ def main():
         
     
     #Read all the data from the responses excelsheet...
-    excelsheet = pd.read_excel(r'C:\Users\valde\Desktop\HoCScheduler\House of Commons, Scheduler (Responses).xlsx')
+    excelsheet = pd.read_excel(r'C:\Users\valde\Desktop\GitHub\HoCScheduler\House of Commons, Scheduler (Responses).xlsx')
     df = pd.DataFrame(excelsheet, columns = RESPONSECOLUMNS)
     
     # Array of people being scheduled in this program...
