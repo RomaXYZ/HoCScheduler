@@ -4,10 +4,6 @@ from heapq import heapify, heappush, heappop
 import random
 from enum import Enum
 
-# If you want to add more steward jobs, append this constant list
-STEWARDJOBS = ['Board Representative', 'Labor Steward', 'Kitchen Manager', 'Food Shop Manager', 'Treasurer', 'Membership',
-                   'Garden Manager', 'Meeting Fascilitator', 'Office Contact']
-
 # If you want to add more columns to the Scheduler Excelsheet, append this list and keep it in the correct order from left to right
 EXCELCOLUMNS = ['Job Name', 'Number of Hours', 'Day',
         'Time Start', 'Time End', 'Slots', 'Priority', 'Assignment']
@@ -215,9 +211,11 @@ def main():
                 fulfilled_jobs.append(unfulfilled_jobs[x])
         # If this is a steward job without any assignment, fulfill..
         else:
-            for y in range(len(STEWARDJOBS)):
-                if(str(STEWARDJOBS[y]) == unfulfilled_jobs[x].name):
-                    fulfilled_jobs.append(unfulfilled_jobs[x])
+            # for y in range(len(STEWARDJOBS)):
+            #     if(str(STEWARDJOBS[y]) == unfulfilled_jobs[x].name):
+            #         fulfilled_jobs.append(unfulfilled_jobs[x])
+            if(unfulfilled_jobs[x].day == "Executive"):
+                fulfilled_jobs.append(unfulfilled_jobs[x])
                 
     # Deallocate any unfulfiled jobs which already have the numbers of slots equal to hard-coded candidates..
     for x in range(len(fulfilled_jobs)):
@@ -247,7 +245,9 @@ def main():
     # Keep working until you've done a complete pass on the priorityHeap and that there are still free people to assign work
     while(priorityHeap != [] and free_people != []):
         # Pop a unfulfilled job
-        working_job = unfulfilled_jobs[heappop(priorityHeap)[2]]
+        temp = heappop(priorityHeap)
+        working_job = unfulfilled_jobs[temp[2]]
+        job_index = temp[2]
 
         # Create a list of available people... i,e who's schedule matches the needs of this job...
         available_people = []
@@ -307,8 +307,41 @@ def main():
                     # We have a match!
                     available_people.append(free_people[x])
 
-        for u in range(len(available_people)):
-            print(working_job.name + " " + working_job.day + " " + available_people[u].name)
+        # You now have a list of available people for the job...
+        # for u in range(len(available_people)):
+        #     print(working_job.name + " " + working_job.day + " " + available_people[u].name)
+
+        # Sort the available people array, indexed by preferences
+        available_sorted = []
+        for x in range(len(available_people)):
+            this_person = available_people[x]
+            # What this person will be keyed by
+            key = 0
+            if(this_job.name in this_person.preferences):
+                # If this job is preferred by this person, keep their key low
+                # Discover how many of their job preferences can still be fulfilled
+                for y in range(len(priorityHeap)):
+                    if(unfulfilled_jobs[priorityHeap[y][2]] in this_person.preferences):
+                        key += 1
+
+            else:
+                # This person does not prefer this job, make their key high
+                key = 9999
+
+            # Sort this person by their key
+            heappush(available_sorted, (key, this_person.name, x))
+
+        # You have the available people sorted now...
+        # Assign people jobs now!
+
+        # Assign the job
+        
+
+
+
+
+
+
 
 if __name__ == '__main__':
     main()
